@@ -88,6 +88,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\play.png" />

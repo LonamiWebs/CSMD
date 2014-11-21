@@ -14,10 +14,24 @@
    height="297mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="CSMD.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="cst.svg"
+   inkscape:export-filename="D:\Drive\Documentos\Projects\CSMD\CSMD\Assets\csmd big.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3826">
+      <stop
+         style="stop-color:#464646;stop-opacity:1;"
+         offset="0"
+         id="stop3828" />
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="1"
+         id="stop3830" />
+    </linearGradient>
     <linearGradient
        id="linearGradient3761">
       <stop
@@ -42,6 +56,26 @@
        x2="300"
        y2="1229.505"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3826"
+       id="linearGradient3832"
+       x1="336.75375"
+       y1="467.74854"
+       x2="341.40808"
+       y2="483.0271"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(1.5152288,7.0710678)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3826"
+       id="linearGradient3844"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(1.5152288,7.0710678)"
+       x1="336.75375"
+       y1="467.74854"
+       x2="341.40808"
+       y2="483.0271" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -50,9 +84,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="340.63178"
-     inkscape:cy="539.06025"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="614.08413"
+     inkscape:cy="631.04586"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -79,7 +113,7 @@
      id="layer1">
     <g
        id="g3885"
-       transform="matrix(0.09105692,0,0,0.09105692,281.27991,453.32477)"
+       transform="matrix(0.94850955,0,0,0.94850955,-340.1683,-248.16394)"
        inkscape:export-filename="D:\Drive\Documentos\Visual Studio 2013\Projects\CSMD\CSMD\Assets\cst.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -162,6 +196,59 @@
          id="path3025-1-7-4-0-9"
          d="m 190.91883,650.32147 342.44172,0"
          style="fill:none;stroke:#00ff00;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       id="g3834"
+       transform="matrix(10.416667,0,0,10.416667,-3070.2935,-4695.5683)">
+      <rect
+         style="fill:#ffffff;fill-opacity:0"
+         id="rect3015"
+         width="48"
+         height="48"
+         x="327.76523"
+         y="-501.21896"
+         transform="scale(1,-1)" />
+      <rect
+         style="fill:url(#linearGradient3844);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.0879872px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="rect3017"
+         width="45.440475"
+         height="27.22909"
+         x="329.24011"
+         y="465.75076" />
+      <rect
+         style="fill:#808080;fill-opacity:1"
+         id="rect3019"
+         width="45.528461"
+         height="4.552846"
+         x="329.19614"
+         y="461.15393" />
+      <text
+         xml:space="preserve"
+         style="font-size:12.7042923px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Lucida Console;-inkscape-font-specification:Lucida Console"
+         x="373.4985"
+         y="422.74561"
+         id="text3021"
+         sodipodi:linespacing="125%"
+         transform="scale(0.88383407,1.1314341)"><tspan
+           sodipodi:role="line"
+           id="tspan3023"
+           x="373.4985"
+           y="422.74561">CS:\_</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#ff0000"
+         d="m 368.4815,461.15508 0,2.46992 4.81179,0 0,-2.46992 -4.81179,0 z"
+         id="path3026" />
+      <path
+         id="path3028"
+         d="m 362.75792,461.15508 0,2.46992 4.81179,0 0,-2.46992 -4.81179,0 z"
+         style="fill:#008080"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#008080"
+         d="m 357.42459,461.15508 0,2.46992 4.81179,0 0,-2.46992 -4.81179,0 z"
+         id="path3030" />
     </g>
   </g>
 </svg>
