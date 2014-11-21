@@ -1,0 +1,32 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CSMD.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="NETVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v4.0</Value>
+    </Setting>
+    <Setting Name="ExecutablePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DeleteOnExit" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RandomName" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReferencedAssemblies" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;System.dll&lt;/string&gt;
+  &lt;string&gt;System.Core.dll&lt;/string&gt;
+  &lt;string&gt;System.Data.dll&lt;/string&gt;
+  &lt;string&gt;System.Data.DataSetExtensions.dll&lt;/string&gt;
+  &lt;string&gt;System.Deployment.dll&lt;/string&gt;
+  &lt;string&gt;System.Drawing.dll&lt;/string&gt;
+  &lt;string&gt;System.Windows.Forms.dll&lt;/string&gt;
+  &lt;string&gt;System.Xml.dll&lt;/string&gt;
+  &lt;string&gt;System.Xml.Linq.dll&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

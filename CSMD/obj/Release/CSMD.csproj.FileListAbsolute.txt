@@ -1,0 +1,18 @@
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Release\CSMD.exe
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Release\CSMD.pdb
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.MainF.resources
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.Properties.Resources.resources
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.csproj.GenerateResource.Cache
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.exe
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.pdb
+d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.SettingsF.resources
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Release\CSMD.exe.config
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Release\CSMD.exe.config
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Release\CSMD.exe
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Release\CSMD.pdb
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.MainF.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.Properties.Resources.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.SettingsF.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.csproj.GenerateResource.Cache
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.exe
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.pdb

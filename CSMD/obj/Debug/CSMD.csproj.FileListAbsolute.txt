@@ -1,0 +1,21 @@
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Debug\CSMD.exe.config
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Debug\CSMD.exe
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Debug\CSMD.pdb
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.MainF.resources
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.Properties.Resources.resources
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.SettingsF.resources
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.csproj.GenerateResource.Cache
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.exe
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.pdb
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.csprojResolveAssemblyReference.cache
+d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.AutoComplete.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.csprojResolveAssemblyReference.cache
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.MainF.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.Properties.Resources.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.SettingsF.resources
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.csproj.GenerateResource.Cache
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.exe
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Debug\CSMD.exe.config
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Debug\CSMD.exe
+D:\Drive\Documentos\Projects\CSMD\CSMD\bin\Debug\CSMD.pdb
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.pdb
