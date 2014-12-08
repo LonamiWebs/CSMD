@@ -34,10 +34,10 @@ namespace CSMD
 
         public void Compile(string code = "") {
 
-            CSharpCodeProvider provider = new CSharpCodeProvider(new Dictionary<String, String>
+            var provider = new CSharpCodeProvider(new Dictionary<String, String>
             { { "CompilerVersion", NETVersion } });
 
-            CompilerParameters cp = new CompilerParameters() {
+            var cp = new CompilerParameters {
                 GenerateInMemory = false,
                 GenerateExecutable = true,
                 IncludeDebugInformation = false,
@@ -56,12 +56,36 @@ namespace CSMD
                 Compile(cp, provider, code);
         }
 
-        void Compile(CompilerParameters cp, CSharpCodeProvider provider, string code) {
+        void Compile(CompilerParameters cp, CodeDomProvider provider, string code) {
+        	
+        	const string basecode = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.Diagnostics;
+
+namespace Foo {
+	public class Bar {
+		@main
+	}
+}";
+        	
+        	const string main = @"static void Main(string[] args) {
+			@code
+		}";
+        	
+        	if (!code.Contains("namespace Foo") && !code.Contains("public class bar"))
+        		if (!code.Contains("static void Main"))
+        			code = basecode.Replace("@main", main).Replace("@code", code);
+        		else
+        			code = basecode.Replace("@main", code);
+        	
             CompilerResults cr = provider.CompileAssemblyFromSource(cp, code);
 
             if (cr.Errors.Count > 0)
             {
-                List<string> errors = new List<string>();
+                var errors = new List<string>();
 
                 foreach (CompilerError ce in cr.Errors)
                     errors.Add((ce.IsWarning ? "Warning " : "Error ") + ce.ErrorNumber + " [Line " + ce.Line

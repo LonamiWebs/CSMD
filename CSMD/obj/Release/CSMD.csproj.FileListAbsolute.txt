@@ -16,3 +16,4 @@ D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.SettingsF.resources
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.csproj.GenerateResource.Cache
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.exe
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.pdb
+D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.csprojResolveAssemblyReference.cache

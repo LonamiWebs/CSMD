@@ -44,7 +44,7 @@ namespace CSMD
                 Args = args;
             }
             else // This takes so, so long in InitializeComponent();
-                compileTSSB.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[]
+                compileTSSB.DropDownItems.AddRange(new ToolStripItem[]
                 { settingsTSMI, saveTSMI, tss, spamTSMI});
 
             if (Settings.Default.ExecutablePath == "") {
@@ -57,18 +57,17 @@ namespace CSMD
             infoTSSL.Text += Application.ProductVersion;
         }
 
-        private void MainF_Load(object sender, EventArgs e) {
+        void MainF_Load(object sender, EventArgs e) {
             consoleTB.Select(170, 0);
         }
 
-        #endregion
-
-        
+        #endregion       
 
         #region Editor
 
-        private void consoleTB_KeyDown(object sender, KeyEventArgs e) {
+        #endregion
 
+        void consoleTB_KeyDown(object sender, KeyEventArgs e) {
             int i = consoleTB.SelectionStart;
             int l = consoleTB.GetLineFromCharIndex(i);
             int t = LineTabs(l);
@@ -90,7 +89,7 @@ namespace CSMD
 
         int bfss = -1; // before selection start
 
-        private void consoleTB_KeyUp(object sender, KeyEventArgs e)
+        void consoleTB_KeyUp(object sender, KeyEventArgs e)
         {
             //int i = consoleTB.SelectionStart;
             //int l = consoleTB.GetLineFromCharIndex(i);
@@ -102,18 +101,16 @@ namespace CSMD
         }
 
 
-        private int LineTabs(int lineIndex)
+        int LineTabs(int lineIndex)
         {
             string line = consoleTB.Text.Split('\n')[lineIndex];
             string fl = Regex.Split(line, "[^\t]+")[0];
             return fl.Count(c => c == '\t');
         }
 
-        #endregion
-
         #region Compile
 
-        private void compileTSSB_ButtonClick(object sender, EventArgs e) {
+        void compileTSSB_ButtonClick(object sender, EventArgs e) {
             Compile();
         }
 
@@ -123,15 +120,15 @@ namespace CSMD
 
         #region Status strip
 
-        private void settingsTSMI_Click(object sender, EventArgs e)
+        void settingsTSMI_Click(object sender, EventArgs e)
         { new SettingsF().Show(); }
 
-        private void saveTSMI_Click(object sender, EventArgs e) {
+        void saveTSMI_Click(object sender, EventArgs e) {
             if (codeSFD.ShowDialog() == DialogResult.OK)
                 File.WriteAllText(codeSFD.FileName, consoleTB.Text, Encoding.UTF8);
         }
 
-        private void spamTSMI_Click(object sender, EventArgs e)
+        void spamTSMI_Click(object sender, EventArgs e)
         { Process.Start("http://lonamiwebs.tk"); }
 
         #endregion
