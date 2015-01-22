@@ -9,7 +9,6 @@ d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.exe
 d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.pdb
 d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.csprojResolveAssemblyReference.cache
 d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Debug\CSMD.AutoComplete.resources
-D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.csprojResolveAssemblyReference.cache
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.MainF.resources
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.Properties.Resources.resources
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Debug\CSMD.SettingsF.resources

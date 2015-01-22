@@ -15,6 +15,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
+using System.Threading.Tasks;
 using CSMD.Properties;
 using System;
 using System.Diagnostics;
@@ -28,25 +32,29 @@ namespace CSMD
 {
     public partial class MainF : Form
     {
-
         public static Compiler c = new Compiler();
 
         #region Setup
+        
+        Autocomplete ac;
 
-        string[] Args = new string[0];
-
-        public MainF(string[] args = null)
+        public MainF()
         {
-            InitializeComponent();
-
-            if (args != null) {
-                Visible = false;
-                Args = args;
-            }
-            else // This takes so, so long in InitializeComponent();
-                compileTSSB.DropDownItems.AddRange(new ToolStripItem[]
-                { settingsTSMI, saveTSMI, tss, spamTSMI});
-
+        	InitializeComponent();
+        	
+        	compileTSSB.DropDownItems.AddRange(new ToolStripItem[]
+            { settingsTSMI, saveTSMI, tss, spamTSMI});
+        	
+        	if (Settings.Default.Autocompletion) {
+	        	ac = new Autocomplete(consoleTB) {
+	        		BackColor = Color.Black,
+	        		ForeColor = Color.Lime,
+	        		AddUsingsOnTheFly = Settings.Default.ImportsOnTheFly
+	        	};
+	        	
+	    		ac.LoadAssemblies(Program.StringCollectionToArray(Settings.Default.ReferencedAssemblies));
+        	}
+            
             if (Settings.Default.ExecutablePath == "") {
                 Settings.Default.ExecutablePath = Path.GetTempPath().Trim('\\') + "\\csmc.exe";
                 Settings.Default.Save();
@@ -56,14 +64,10 @@ namespace CSMD
 
             infoTSSL.Text += Application.ProductVersion;
         }
-
+        
         void MainF_Load(object sender, EventArgs e) {
             consoleTB.Select(170, 0);
         }
-
-        #endregion       
-
-        #region Editor
 
         #endregion
 

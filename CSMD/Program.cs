@@ -21,7 +21,7 @@ namespace CSMD
         }
 
         public static string[] StringCollectionToArray(StringCollection stringCollection) {
-            string[] array = new string[stringCollection.Count];
+            var array = new string[stringCollection.Count];
             for (int i = 0; i < array.Length; i++)
                 array[i] = stringCollection[i];
             return array;
@@ -40,7 +40,7 @@ namespace CSMD
                     "\"" + Application.ExecutablePath + "\"" + " \"%1\"");
                 Registry.SetValue("HKEY_CURRENT_USER\\Software\\Classes\\." + extension, "", programName);
 
-                //this call notifies Windows that it needs to redo the file associations and icons
+                // this call notifies Windows that it needs to redo the file associations and icons
                 SHChangeNotify(0x08000000, 0x2000, IntPtr.Zero, IntPtr.Zero);
             }
         }

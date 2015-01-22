@@ -1,4 +1,5 @@
-﻿using CSMD.Properties;
+﻿using System.Diagnostics;
+using CSMD.Properties;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace CSMD
     {
         string NetFrameworkFolder;
 
-        string[] DefaultLibraries = new string[] {
+        string[] DefaultLibraries = {
             "System.dll",
             "System.Core.dll",
             "System.Data.dll",
@@ -41,6 +42,9 @@ namespace CSMD
             executableTB.Text = Settings.Default.ExecutablePath;
             deleteCB.Checked = Settings.Default.DeleteOnExit;
             randomCB.Checked = Settings.Default.RandomName;
+            
+            autocompletionCB.Checked = Settings.Default.Autocompletion;
+            importsOnTheFlyCB.Checked = Settings.Default.ImportsOnTheFly;
 
             executableSFD.InitialDirectory = Path.GetTempPath();
 
@@ -60,7 +64,7 @@ namespace CSMD
             return netFrameworkFolder + "\\";
         }
 
-        private void reassociateB_Click(object sender, EventArgs e) {
+        void reassociateB_Click(object sender, EventArgs e) {
             Cursor = Cursors.WaitCursor;
             Program.AssociateFileType("CSMD", "cst", "CSMD file", true, 1);
             Cursor = Cursors.Arrow;
@@ -68,7 +72,7 @@ namespace CSMD
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void searchB_Click(object sender, EventArgs e)
+        void searchB_Click(object sender, EventArgs e)
         {
             if (executableSFD.ShowDialog() == DialogResult.OK)
                 executableTB.Text = executableSFD.FileName;
@@ -77,56 +81,71 @@ namespace CSMD
 
         #region Apply and close
 
-        private void saveExitB_Click(object sender, EventArgs e) {
+        void saveExitB_Click(object sender, EventArgs e) {
             Apply();
             Close();
         }
 
-        private void applyB_Click(object sender, EventArgs e)
+        void applyB_Click(object sender, EventArgs e)
         { Apply(); }
 
         void Apply() {
             Cursor = Cursors.WaitCursor;
             Settings.Default.NETVersion = (string)netCB.SelectedItem;
 
-            StringCollection libraries = new StringCollection();
+            var libraries = new StringCollection();
             foreach (var item in librariesLB.Items)
                 libraries.Add((string)item);
             Settings.Default.ReferencedAssemblies = libraries;
 
             Settings.Default.RandomName = randomCB.Checked;
             Settings.Default.DeleteOnExit = deleteCB.Checked;
-
+            
+            bool needRestart = (Settings.Default.Autocompletion != autocompletionCB.Checked)
+            	|| (Settings.Default.ImportsOnTheFly != importsOnTheFlyCB.Checked);
+            
+            Settings.Default.Autocompletion = autocompletionCB.Checked;
+            Settings.Default.ImportsOnTheFly = importsOnTheFlyCB.Checked;
+            
             Settings.Default.Save();
 
             MainF.c = new Compiler();
             Cursor = Cursors.Arrow;
+            
+            if (needRestart) {
+				if (MessageBox.Show("You need to restart CSMD for the changes to take effect.\r\nDo you wish to restart CSMD now?",
+                                "Autocompletion changed", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                == DialogResult.Yes) {
+	            	Process.Start(Application.ExecutablePath);
+	            	Application.Exit();
+            	}
+            }
         }
 
-        private void cancelB_Click(object sender, EventArgs e)
+        void cancelB_Click(object sender, EventArgs e)
         { Close(); }
 
         #endregion
 
-        private void randomCB_CheckedChanged(object sender, EventArgs e) {
+        void randomCB_CheckedChanged(object sender, EventArgs e) {
             deleteCB.Enabled = !randomCB.Checked;
         }
 
         #region Libraries
 
-        private void librariesLB_SelectedIndexChanged(object sender, EventArgs e) {
+        void librariesLB_SelectedIndexChanged(object sender, EventArgs e) {
             deleteB.Enabled = librariesLB.SelectedIndex > -1;
         }
 
-        private void librariesLB_KeyDown(object sender, KeyEventArgs e) {
+        void librariesLB_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Delete)
                 Delete();
         }
-        private void delete_Click(object sender, EventArgs e)
+        void delete_Click(object sender, EventArgs e)
         { Delete(); }
 
         void Delete() {
-            List<object> items = new List<object>();
+            var items = new List<object>();
             foreach (var item in librariesLB.SelectedItems)
                 items.Add(item);
 
@@ -134,7 +153,7 @@ namespace CSMD
                 librariesLB.Items.Remove(item);
         }
 
-        private void add_Click(object sender, EventArgs e) {
+        void add_Click(object sender, EventArgs e) {
             Add();
         }
 
@@ -144,23 +163,26 @@ namespace CSMD
                     librariesLB.Items.Add(filename.Replace(NetFrameworkFolder, ""));
         }
 
-        private void restoreTSMI_Click(object sender, EventArgs e) {
+        void restoreTSMI_Click(object sender, EventArgs e) {
             librariesLB.Items.Clear();
             librariesLB.Items.AddRange(DefaultLibraries);
         }
 
 
-        private void librariesLB_MouseMove(object sender, MouseEventArgs e)
+        void librariesLB_MouseMove(object sender, MouseEventArgs e)
         {
             int i = librariesLB.IndexFromPoint(e.X, e.Y);
             if (i > -1)
             {
                 string s = (string)librariesLB.Items[i];
-                ListBox lb = (ListBox)sender;
+                var lb = (ListBox)sender;
                 if (librariesTT.GetToolTip(lb) != s)
                     librariesTT.SetToolTip(lb, s);
             }
         }
+        
+		void AutocompletionCBCheckedChanged(object sender, EventArgs e)
+		{ importsOnTheFlyCB.Enabled = autocompletionCB.Checked; }
 
         #endregion
     }
