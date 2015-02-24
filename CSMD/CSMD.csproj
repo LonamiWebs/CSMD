@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Autocomplete_CS.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Is.cs" />
     <Compile Include="MainF.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +64,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScrollUtils.cs" />
     <Compile Include="SettingsF.cs">
       <SubType>Form</SubType>
     </Compile>

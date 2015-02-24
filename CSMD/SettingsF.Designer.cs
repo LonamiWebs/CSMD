@@ -189,6 +189,7 @@
         	this.executableTB.Name = "executableTB";
         	this.executableTB.Size = new System.Drawing.Size(156, 20);
         	this.executableTB.TabIndex = 10;
+        	this.executableTB.TextChanged += new System.EventHandler(this.ExecutableTBTextChanged);
         	// 
         	// searchB
         	// 

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using CSMD.Properties;
 using Microsoft.Win32;
 using System;
@@ -107,6 +108,9 @@ namespace CSMD
             Settings.Default.Autocompletion = autocompletionCB.Checked;
             Settings.Default.ImportsOnTheFly = importsOnTheFlyCB.Checked;
             
+            if (MainF.ValidFilePath(executableTB.Text))
+            	Settings.Default.ExecutablePath = executableTB.Text;
+            
             Settings.Default.Save();
 
             MainF.c = new Compiler();
@@ -183,6 +187,11 @@ namespace CSMD
         
 		void AutocompletionCBCheckedChanged(object sender, EventArgs e)
 		{ importsOnTheFlyCB.Enabled = autocompletionCB.Checked; }
+		
+		void ExecutableTBTextChanged(object sender, EventArgs e)
+		{
+			executableTB.BackColor = MainF.ValidFilePath(executableTB.Text) ? SystemColors.Window : Color.FromArgb(255, 128, 128);
+		}
 
         #endregion
     }

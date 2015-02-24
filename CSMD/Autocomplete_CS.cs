@@ -1,12 +1,16 @@
 ﻿/* Made by Lonami Exo.
+ * (C) LonamiWebs .TK
  * 
  * ===== Started =====
- * 20 - January - 2015
- * ==== Last edit ====
- * 22 - January - 2015
+ * 20   January   2015
  * 
- * Me llevóh toah' lah
- * tarde pero funca */
+ * ==== Some edit ====
+ * 22   January   2015
+ * 
+ * === Another edit ==
+ * 22   February  2015
+ * 
+ * And more to come */
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +23,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//todo tooltip which assembly is it (on mouse in)
+// TODO Tooltip: which assembly is it (on mouse in)
+
 public class Autocomplete {
 	
 	#region Private variables
@@ -27,14 +32,13 @@ public class Autocomplete {
 	readonly TextBox textbox;
 	readonly Form af;
 	readonly ListBox lb;
-	readonly ContextMenuStrip cms;
 
 	List<Type> loadedTypes = new List<Type>();
 
-	bool lb_doubleclick;
-
 	const string rnonalpha = @"\W|_"; // match any non-word or _
 	const string rnonalpha_nodot = @"[^\w.]"; // match any non-word and non-.
+
+	bool lb_doubleclick;
 
 	bool is64bitPC = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
 	readonly string assembliesLocation;
@@ -54,6 +58,11 @@ public class Autocomplete {
 		"add", "alias", "ascending", "async", "await", "descending",
 		"dynamic", "from", "get", "global", "group", "into", "join", "let",
 		"orderby", "partial", "remove", "select", "set", "value", "var", "where", "yield"
+	};
+	
+	readonly List<string> declaringKeywords = new List<string> {
+		"char", "class", "decimal", "float", "int", "long", "namespace", "object",
+		"sbyte", "short", "struct", "uint", "ulong", "ushort", "void", "var"
 	};
 	
 	List<string> usings = new List<string>();
@@ -143,8 +152,6 @@ public class Autocomplete {
 		};
 		af.Controls.Add(lb);
 		
-		textbox.ContextMenuStrip = cms;
-		
 		assembliesLocation = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Trim('\\') +
 			@"\Microsoft.NET\Framework" + (is64bitPC ? "64" : "") + @"\v4.0.30319\";
 
@@ -164,7 +171,7 @@ public class Autocomplete {
 				continue;
 			
 			foreach (var c in u)
-				if (!IsAlpha(c))
+				if (!Is.Alpha(c))
 					continue;
 			
 			if (textbox.Text.Replace(" ", "").Contains("using" + u + ";"))
@@ -202,6 +209,8 @@ public class Autocomplete {
 		
 		string newstr = sb + String.Join("\r\n", lines);
 		
+		int lstScrollPos = ScrollUtils.GetScrollPosition(textbox);
+		
 		if (textbox.InvokeRequired) { // if called from TaskFactory / async / other thread...
 			textbox.Invoke(new MethodInvoker(() => {
  												int pos = textbox.SelectionStart += added - removed;
@@ -214,6 +223,8 @@ public class Autocomplete {
 			textbox.Text = newstr;
 			textbox.SelectionStart = pos;
 		}
+		
+		ScrollUtils.SetScrollPosition(textbox, lstScrollPos);
 	}
 	
 	#endregion
@@ -266,48 +277,121 @@ public class Autocomplete {
 	#region Words management
 	
 	#region Get and remove last word
-
-	string GetLastWord(int deep = 1) {
-		// instead splitting only by ' '
-		string[] split = Regex.Split(textbox.Text.Substring(0, textbox.SelectionStart),
-		                             rnonalpha_nodot);
-
-		string[] pts = split[split.Length - 1].Split('.');
-
-		return pts.Length >= deep ? pts[pts.Length - deep] : "";
+	
+	char[] ValidSeparators = new char[] { '.', ' ', '\t', '\r', '\n' };
+	
+	/// <summary>
+	/// 0 = Current word, 1 = Last, 2 = Word before last, and so on
+	/// </summary>
+	/// <param name="deep">The search's deep</param>
+	/// <param name="onlySeparatedByDot">If the words can only be separated by a dot</param>
+	/// <returns>The last word</returns>
+	string GetLastWord(int deep = 1, bool onlySeparatedByDot = false)
+	{
+		int i = textbox.SelectionStart;
+		
+		if (i == textbox.Text.Length)
+			return "";
+		
+		int end, start;
+		end = start = 0;
+		
+		if (deep > 0)
+		{
+			i--; // We need to lower one because otherwise the (0) word would be the same as (1)
+			while (deep > 0)
+			{
+				while (i > -1 && Is.Alpha(textbox.Text[i])) { i--; }
+				
+				if (onlySeparatedByDot)
+				{
+					int dots = 0; // Let's check if it's separated by a dot or not
+					char c = textbox.Text[i];
+					while (i > -1 && !Is.Alpha(c))
+					{
+						if (ValidSeparators.Contains(c))
+						{
+							if (c == '.')
+							{
+								if (dots == 0)
+									dots++;
+								else
+									return "";
+							}
+						} else
+							return "";
+							
+						i--;
+						c = textbox.Text[i];
+					}
+					
+					if (dots == 0)
+						return "";
+				}
+				else
+					while (i > -1 && !Is.Alpha(textbox.Text[i])) { i--; }
+				
+				end = i + 1;
+				
+				while (i > -1 && Is.Alpha(textbox.Text[i])) { i--; }
+				
+				start = i + 1;
+				
+				deep--;
+			}
+		}
+		else
+		{
+			int l = textbox.Text.Length;
+			while (i < l && Is.Alpha(textbox.Text[i])) { i++; }
+			
+			end = i--;
+			
+			while (i > -1 && Is.Alpha(textbox.Text[i])) { i--; }
+			
+			start = i + 1;
+		}
+		
+		return end <= start ? "" : textbox.Text.Substring(start, end - start);
 	}
 	
-	// TODO use me (GetLastWordIndexAndLength())
-	// useful to select a whole word on right click and then determine the type and give some info...
-	int[] GetLastWordIndexAndLength() {
-		int i = textbox.SelectionStart;
-		while (i >= 0 && IsAlpha(textbox.Text[i]))
-			i--;
+	bool IsDeclaring()
+	{
+		var lstWord = GetLastWord();
+		foreach (var declaring in declaringKeywords)
+			if (declaring == lstWord) // faster than linq
+				return true;
 		
-		int start = ++i; // ++i because it stops at ' ' (or another non-alpha char)
-		
-		while (i < textbox.Text.Length && IsAlpha(textbox.Text[i]))
-			i++;
-		
-		int length = i - start;
-
-		return new [] { start, length };
+		return false;
 	}
-
-	List<string> GetTypedFull(int maxDeep = 6) {
-		var found = new List<string>();
-		for (int i = 1; i <= maxDeep; i++) {
-			var str = GetLastWord(i);
-			if (str == "") break;
-			found.Add(str);
+	
+	// TODO this works, useme!
+	List<string> GetDeclaredVariables() 
+	{
+		var txt = textbox.Text.Replace("\r\n", " ").Replace("\t", " ").Replace("(", " ");
+		while (txt.Contains("  "))
+			txt = txt.Replace("  ", " ");
+		
+		var all = txt.Split(' ');
+		int i = 0;
+		var indicies = new List<int>();
+		foreach (var word in all) {
+			if (declaringKeywords.Contains(word))
+				indicies.Add(i + 1);
+			i++;
 		}
-
-		found.Reverse();
-		return found;
+		
+		var words = new List<string>();
+		
+		foreach (var index in indicies)
+			if (index < all.Length)
+				words.Add(all[index]);
+		
+		return words;
 	}
 
 	void RemoveLastWord(string replacewith = "") {
-		int pos = textbox.SelectionStart;
+		int lstScroll = ScrollUtils.GetScrollPosition(textbox);
 
 		string[] split1 = Regex.Split(textbox.Text.Substring(0, textbox.SelectionStart), rnonalpha);
 
@@ -320,6 +404,7 @@ public class Autocomplete {
 
 		textbox.Text = textbox.Text.Substring(0, start) + replacewith + textbox.Text.Substring(end);
 		textbox.SelectionStart = start + replacewith.Length;
+		ScrollUtils.SetScrollPosition(textbox, lstScroll);
 	}
 	
 	#endregion
@@ -332,7 +417,7 @@ public class Autocomplete {
 		
 		if (i > 0) {
 			i--;
-			while (i > 0 && (IsAlpha(textbox.Text[i]) || textbox.Text[i] == ' ')) {
+			while (i > 0 && (Is.Alpha(textbox.Text[i]) || textbox.Text[i] == ' ')) {
 	       		i--;
 			}
 		}
@@ -362,7 +447,7 @@ public class Autocomplete {
 					if (c == 'n' && closingParenthesis == 0 && closingBrackets == 0)
 						if (IsKeywordNew(i)) {
 							i += 4; // "new ".Length
-							while (IsAlpha(textbox.Text[i]))
+							while (Is.Alpha(textbox.Text[i]))
 								returnme += textbox.Text[i++];
 							
 							break;
@@ -449,8 +534,12 @@ public class Autocomplete {
 	#region Types management
 
 	Type FindTypeByName(string name) {
-		List<Type> founds = loadedTypes.Where(t => t.Name == name).ToList();
-		return founds.Count == 0 ? null : founds[0];
+		try {
+			List<Type> founds = loadedTypes.Where(t => t.Name == name).ToList();
+			return founds.Count == 0 ? null : founds[0];
+		} catch (InvalidOperationException) { return null; } // TODO don't use this try catch
+		// perhaps loadedTypesCopy = new List(loadedTypes) ? check out performance shock of this,
+		// if minimal (shock < 5) -> use, otherwise don't
 	}
 
 	Type FindTypeByVariableName(string name) {
@@ -463,7 +552,7 @@ public class Autocomplete {
 			start += name.Length + 4; // 4 = "=new".Length
 			int end = start;
 			if (end < str.Length) {
-				while (IsAlpha(str[end++]))
+				while (Is.Alpha(str[end++]))
 					if (end >= str.Length)
 						break;
 	
@@ -483,7 +572,7 @@ public class Autocomplete {
 						case 'f':
 							return typeof(bool);
 						default:
-							if (IsDigit(str[start]))
+							if (Is.Numeric(str[start]))
 							    return typeof(int);
 							break;
 					}
@@ -504,9 +593,8 @@ public class Autocomplete {
 		ClearSuggestions();
 		
 		var suggestions = new List<string>();
-		
-		string lsttype = GetLastWord(2);
-		string lstword = GetLastWord().ToLower();
+		string lsttype = GetLastWord(1, true);
+		string lstword = GetLastWord(0).ToLower();
 		string newk = IsRightAfterNew();
 		
 		if (newk.Length != 0) { // right after new something();
@@ -524,25 +612,38 @@ public class Autocomplete {
 					AddTypeSuggestions(t, lstword, ref suggestions, false);
 			}
 		} else { // everything else
-			int count = 0;
-		
-			foreach (var s in keywords.Where(s => s.StartsWith(lstword,
-               StringComparison.OrdinalIgnoreCase)).ToList())
-			{
-				if (count++ > MaximumSuggestions)
-					break;
+			try {
+				int count = 0;
 				
-				suggestions.Add(s);
-			}
-			var validTypes = loadedTypes.Where(t => t.Name.StartsWith(lstword,
-              	StringComparison.OrdinalIgnoreCase)).ToList();
-			foreach (var t in validTypes)
-			{
-				if (count++ > MaximumSuggestions)
-					break;
+				foreach (var s in GetDeclaredVariables().Where(s => s.StartsWith(lstword,
+	               StringComparison.OrdinalIgnoreCase)).ToList())
+				{
+					if (count++ > MaximumSuggestions)
+						break;
+					
+					suggestions.Add(s);
+				}
 				
-				suggestions.Add(t.Name);
-			}
+				foreach (var s in keywords.Where(s => s.StartsWith(lstword,
+	               StringComparison.OrdinalIgnoreCase)).ToList())
+				{
+					if (count++ > MaximumSuggestions)
+						break;
+					
+					suggestions.Add(s);
+				}
+				
+				var validTypes = loadedTypes.Where(t => t.Name.StartsWith(lstword,
+					StringComparison.OrdinalIgnoreCase)).ToList();
+				
+				foreach (var t in validTypes)
+				{
+					if (count++ > MaximumSuggestions)
+						break;
+					
+					suggestions.Add(t.Name);
+				}
+			} catch (InvalidOperationException) { } // not the best way yet the most effective
 		}
 		
 		AddSuggestions(SortByLength(suggestions));
@@ -703,35 +804,19 @@ public class Autocomplete {
 	
 	#endregion
 	
-	#region Is Alpha or Digit?
-	
-	bool IsAlpha(Keys key) {
-		string k = key.ToString();
-		return k.Length <= 1 && Regex.IsMatch(k, "\\w");
-	}
-	
-	bool IsAlpha(char c) {
-		return Regex.IsMatch(c.ToString(), "\\w");
-	}
-	
-	bool IsDigit(char c) {
-		int a = 0;
-		return Int32.TryParse(c.ToString(), out a);
-	}
-	
-	#endregion
-	
 	#region Events
 	
 	void textbox_KeyDown(object sender, KeyEventArgs e)
 	{	
+		GetDeclaredVariables();
+		
 		if (magicKeys.Contains(e.KeyCode))
 			e.Handled = e.SuppressKeyPress = SelectSuggestion(GetKeyStr(e.KeyCode));
 		else if (e.KeyCode == Keys.Up)
 			e.Handled = e.SuppressKeyPress = MoveUp();
 		else if (e.KeyCode == Keys.Down)
 			e.Handled = e.SuppressKeyPress = MoveDown();
-		else if (!IsInString() && IsAlpha(e.KeyCode))
+		else if (!IsInString() && IsAlpha(e.KeyCode) && !IsDeclaring() && !e.Control)
 			ShowSuggestions();
 		else
 			HideSuggestions();
@@ -763,6 +848,12 @@ public class Autocomplete {
 	}
 	
 	#endregion
+	
+	#warning This may not be 100% accurate
+	bool IsAlpha(Keys key) {
+		string k = key.ToString();
+		return k.Length <= 1 && Is.Alpha(k);
+	}
 	
 	#if DEBUG
 	

@@ -7,7 +7,6 @@ d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.exe
 d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.pdb
 d:\drive\documentos\visual studio 2013\Projects\CSMD\CSMD\obj\Release\CSMD.SettingsF.resources
 d:\Drive\documentos\visual studio 2013\Projects\CSMD\CSMD\bin\Release\CSMD.exe.config
-D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.csprojResolveAssemblyReference.cache
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.MainF.resources
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.Properties.Resources.resources
 D:\Drive\Documentos\Projects\CSMD\CSMD\obj\Release\CSMD.SettingsF.resources

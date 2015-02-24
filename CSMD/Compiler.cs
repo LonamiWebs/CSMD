@@ -31,7 +31,6 @@ namespace CSMD
             RandomName = Settings.Default.RandomName;
         }
 
-
         public void Compile(string code = "") {
 
             var provider = new CSharpCodeProvider(new Dictionary<String, String>
@@ -64,6 +63,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
 
 namespace Foo {
 	public class Bar {
@@ -75,7 +75,7 @@ namespace Foo {
 			@code
 		}";
         	
-        	if (!code.Contains("namespace Foo") && !code.Contains("public class bar"))
+        	if (!code.Contains("namespace Foo") && !code.Contains("public class Bar"))
         		if (!code.Contains("static void Main"))
         			code = basecode.Replace("@main", main).Replace("@code", code);
         		else

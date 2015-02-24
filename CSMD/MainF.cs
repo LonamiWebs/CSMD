@@ -17,15 +17,12 @@
 
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
-using System.Threading.Tasks;
 using CSMD.Properties;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace CSMD
@@ -33,6 +30,8 @@ namespace CSMD
     public partial class MainF : Form
     {
         public static Compiler c = new Compiler();
+        
+        int tabs = -1;
 
         #region Setup
         
@@ -55,8 +54,9 @@ namespace CSMD
 	    		ac.LoadAssemblies(Program.StringCollectionToArray(Settings.Default.ReferencedAssemblies));
         	}
             
-            if (Settings.Default.ExecutablePath == "") {
-                Settings.Default.ExecutablePath = Path.GetTempPath().Trim('\\') + "\\csmc.exe";
+        	if (!ValidFilePath(Settings.Default.ExecutablePath))
+        	{
+        		Settings.Default.ExecutablePath = Path.Combine(Path.GetTempPath(), "csmc.exe");
                 Settings.Default.Save();
             }
 
@@ -65,51 +65,61 @@ namespace CSMD
             infoTSSL.Text += Application.ProductVersion;
         }
         
+        public static bool ValidFilePath(string path)
+        {
+        	List<char> invalidChars = Path.GetInvalidFileNameChars().ToList();
+        	if (path.Contains("\\") && path.Count(c => c == ':') == 1) {
+        		invalidChars.Remove('\\');
+        		invalidChars.Remove(':');
+        		return path.Trim('\\') == path && path.IndexOfAny(invalidChars.ToArray()) < 0;
+        	}
+        	return !String.IsNullOrWhiteSpace(path) && path.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+        }
+        
         void MainF_Load(object sender, EventArgs e) {
             consoleTB.Select(170, 0);
         }
 
         #endregion
-
-        void consoleTB_KeyDown(object sender, KeyEventArgs e) {
-            int i = consoleTB.SelectionStart;
-            int l = consoleTB.GetLineFromCharIndex(i);
-            int t = LineTabs(l);
-
-            if (e.KeyCode == Keys.Enter)
-                SendKeys.Send("{TAB " + t + "}");
-
-            //bfss = i;
-
-            //if (e.KeyCode == Keys.Home)
-            //    SendKeys.Send("{RIGHT " + t + "}");
-
-            if (e.Control && e.KeyCode == Keys.Enter) {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-                Compile();
-            }
+        
+        void consoleTB_KeyDown(object sender, KeyEventArgs e)
+        {
+        	if (e.KeyCode == Keys.Enter)
+	        	if (e.Control) {
+	                e.Handled = e.SuppressKeyPress = true;
+	                Compile();
+	            }
+        		else
+        			tabs = LineTabs;
         }
-
-        int bfss = -1; // before selection start
 
         void consoleTB_KeyUp(object sender, KeyEventArgs e)
         {
-            //int i = consoleTB.SelectionStart;
-            //int l = consoleTB.GetLineFromCharIndex(i);
-            //int t = LineTabs(l);
-
-            //if (e.KeyCode == Keys.Home)
-            //    if (bfss == i)
-            //        SendKeys.Send("{LEFT " + t + "}");
+        	if (tabs > -1)
+        	{
+        		int lpos = consoleTB.SelectionStart;
+        		consoleTB.Text = consoleTB.Text.Insert(lpos, new String('\t', tabs));
+        		consoleTB.SelectionStart += lpos + tabs;
+        		tabs = -1;
+        	}
         }
 
 
-        int LineTabs(int lineIndex)
-        {
-            string line = consoleTB.Text.Split('\n')[lineIndex];
-            string fl = Regex.Split(line, "[^\t]+")[0];
-            return fl.Count(c => c == '\t');
+        int LineTabs {
+        	get {
+	        	int ts = 0;
+	        	int i = consoleTB.SelectionStart;
+	        	while (--i > -1)
+	        	{
+	        		if (consoleTB.Text[i] == '\n')
+	        			break;
+	        		if (consoleTB.Text[i] == '\t')
+	        			ts++;
+	        		else
+	        			ts = 0;
+	        	}
+	        	return ts;
+        	}
         }
 
         #region Compile
@@ -136,8 +146,6 @@ namespace CSMD
         { Process.Start("http://lonamiwebs.tk"); }
 
         #endregion
-
-        public static void m(object msg) { System.Diagnostics.Debug.WriteLine(msg == null ? "null" : msg.ToString()); }
 
     }
 }
