@@ -117,5 +117,17 @@ namespace CSMD.Properties {
 				this["ReferencedAssemblies"] = value;
 			}
 		}
+		
+		[global::System.Configuration.UserScopedSettingAttribute()]
+		[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+		[global::System.Configuration.DefaultSettingValueAttribute("False")]
+		public bool WordWrap {
+			get {
+				return ((bool)(this["WordWrap"]));
+			}
+			set {
+				this["WordWrap"] = value;
+			}
+		}
 	}
 }

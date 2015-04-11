@@ -36,7 +36,8 @@ namespace CSMD
             librariesLB.Items.AddRange(Program.StringCollectionToArray(Settings.Default.ReferencedAssemblies));
 
             var netV = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP");
-            foreach (var s in netV.GetSubKeyNames().Where(x => x.StartsWith("v")))
+            foreach (var s in netV.GetSubKeyNames().Where(x =>
+                                  x.StartsWith("v", StringComparison.InvariantCultureIgnoreCase)))
                 netCB.Items.Add(s);
             netCB.SelectedItem = Settings.Default.NETVersion;
 
@@ -46,6 +47,8 @@ namespace CSMD
             
             autocompletionCB.Checked = Settings.Default.Autocompletion;
             importsOnTheFlyCB.Checked = Settings.Default.ImportsOnTheFly;
+            
+            wordWrapCB.Checked = Settings.Default.WordWrap;
 
             executableSFD.InitialDirectory = Path.GetTempPath();
 
@@ -61,7 +64,8 @@ namespace CSMD
             if (Directory.Exists(netFrameworkFolder + "64"))
                 netFrameworkFolder += "64";
             string[] folders = Directory.GetDirectories(netFrameworkFolder);
-            netFrameworkFolder = folders.Where(x => Path.GetFileName(x).StartsWith("v4.0")).ToArray()[0];
+            netFrameworkFolder = folders.Where(x => Path.GetFileName(x)
+                   .StartsWith("v4.0", StringComparison.InvariantCultureIgnoreCase)).ToList()[0];
             return netFrameworkFolder + "\\";
         }
 
@@ -108,7 +112,9 @@ namespace CSMD
             Settings.Default.Autocompletion = autocompletionCB.Checked;
             Settings.Default.ImportsOnTheFly = importsOnTheFlyCB.Checked;
             
-            if (MainF.ValidFilePath(executableTB.Text))
+            Settings.Default.WordWrap = wordWrapCB.Checked;
+            
+            if (Utils.ValidFilePath(executableTB.Text))
             	Settings.Default.ExecutablePath = executableTB.Text;
             
             Settings.Default.Save();
@@ -190,7 +196,7 @@ namespace CSMD
 		
 		void ExecutableTBTextChanged(object sender, EventArgs e)
 		{
-			executableTB.BackColor = MainF.ValidFilePath(executableTB.Text) ? SystemColors.Window : Color.FromArgb(255, 128, 128);
+			executableTB.BackColor = Utils.ValidFilePath(executableTB.Text) ? SystemColors.Window : Color.FromArgb(255, 128, 128);
 		}
 
         #endregion

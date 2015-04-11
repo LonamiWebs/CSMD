@@ -29,97 +29,49 @@ namespace CSMD
 {
     public partial class MainF : Form
     {
+    	// The compiler
         public static Compiler c = new Compiler();
-        
-        int tabs = -1;
 
         #region Setup
-        
-        Autocomplete ac;
 
         public MainF()
         {
         	InitializeComponent();
         	
-        	compileTSSB.DropDownItems.AddRange(new ToolStripItem[]
-            { settingsTSMI, saveTSMI, tss, spamTSMI});
+        	// Set up the autocompletion
+        	consoleCSTB.AutocompletionEnabled = Settings.Default.Autocompletion;
         	
-        	if (Settings.Default.Autocompletion) {
-	        	ac = new Autocomplete(consoleTB) {
-	        		BackColor = Color.Black,
-	        		ForeColor = Color.Lime,
-	        		AddUsingsOnTheFly = Settings.Default.ImportsOnTheFly
-	        	};
-	        	
-	    		ac.LoadAssemblies(Program.StringCollectionToArray(Settings.Default.ReferencedAssemblies));
-        	}
+        	consoleCSTB.LoadAssemblies(Program.StringCollectionToArray(Settings.Default.ReferencedAssemblies));
             
-        	if (!ValidFilePath(Settings.Default.ExecutablePath))
+        	// Check if the compiled output has a valid path
+        	if (!Utils.ValidFilePath(Settings.Default.ExecutablePath))
         	{
+        		// If it doesn't, reset
         		Settings.Default.ExecutablePath = Path.Combine(Path.GetTempPath(), "csmc.exe");
                 Settings.Default.Save();
             }
 
+        	// Check for program association with .cst files
             Program.AssociateFileType("CSMD", "cst", "CSMD file", false, 1);
 
+            // Append version to the info label
             infoTSSL.Text += Application.ProductVersion;
         }
         
-        public static bool ValidFilePath(string path)
+        void MainF_Load(object sender, EventArgs e)
         {
-        	List<char> invalidChars = Path.GetInvalidFileNameChars().ToList();
-        	if (path.Contains("\\") && path.Count(c => c == ':') == 1) {
-        		invalidChars.Remove('\\');
-        		invalidChars.Remove(':');
-        		return path.Trim('\\') == path && path.IndexOfAny(invalidChars.ToArray()) < 0;
-        	}
-        	return !String.IsNullOrWhiteSpace(path) && path.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
-        }
-        
-        void MainF_Load(object sender, EventArgs e) {
-            consoleTB.Select(170, 0);
+        	consoleCSTB.SelectionStart = 165;
         }
 
         #endregion
         
-        void consoleTB_KeyDown(object sender, KeyEventArgs e)
+        void consoleCSTB_KeyDown(object sender, KeyEventArgs e)
         {
-        	if (e.KeyCode == Keys.Enter)
-	        	if (e.Control) {
-	                e.Handled = e.SuppressKeyPress = true;
-	                Compile();
-	            }
-        		else
-        			tabs = LineTabs;
-        }
-
-        void consoleTB_KeyUp(object sender, KeyEventArgs e)
-        {
-        	if (tabs > -1)
+        	if (e.KeyCode == Keys.Enter && e.Control)
         	{
-        		int lpos = consoleTB.SelectionStart;
-        		consoleTB.Text = consoleTB.Text.Insert(lpos, new String('\t', tabs));
-        		consoleTB.SelectionStart += lpos + tabs;
-        		tabs = -1;
-        	}
-        }
-
-
-        int LineTabs {
-        	get {
-	        	int ts = 0;
-	        	int i = consoleTB.SelectionStart;
-	        	while (--i > -1)
-	        	{
-	        		if (consoleTB.Text[i] == '\n')
-	        			break;
-	        		if (consoleTB.Text[i] == '\t')
-	        			ts++;
-	        		else
-	        			ts = 0;
-	        	}
-	        	return ts;
-        	}
+                e.Handled = e.SuppressKeyPress = true;
+                Compile();
+            }
         }
 
         #region Compile
@@ -128,7 +80,7 @@ namespace CSMD
             Compile();
         }
 
-        void Compile() { c.Compile(consoleTB.Text); }
+        void Compile() { c.Compile(consoleCSTB.Text); }
 
         #endregion
 
@@ -137,9 +89,10 @@ namespace CSMD
         void settingsTSMI_Click(object sender, EventArgs e)
         { new SettingsF().Show(); }
 
-        void saveTSMI_Click(object sender, EventArgs e) {
+        void saveTSMI_Click(object sender, EventArgs e)
+        {
             if (codeSFD.ShowDialog() == DialogResult.OK)
-                File.WriteAllText(codeSFD.FileName, consoleTB.Text, Encoding.UTF8);
+                File.WriteAllText(codeSFD.FileName, consoleCSTB.Text, Encoding.UTF8);
         }
 
         void spamTSMI_Click(object sender, EventArgs e)

@@ -29,43 +29,36 @@
         private void InitializeComponent()
         {
         	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainF));
-        	this.consoleTB = new System.Windows.Forms.TextBox();
+        	this.consoleCSTB = new CSTextBox();
         	this.statusStrip = new System.Windows.Forms.StatusStrip();
         	this.infoTSSL = new System.Windows.Forms.ToolStripStatusLabel();
         	this.compileTSSB = new System.Windows.Forms.ToolStripSplitButton();
-        	this.codeSFD = new System.Windows.Forms.SaveFileDialog();
         	this.settingsTSMI = new System.Windows.Forms.ToolStripMenuItem();
         	this.saveTSMI = new System.Windows.Forms.ToolStripMenuItem();
         	this.tss = new System.Windows.Forms.ToolStripSeparator();
         	this.spamTSMI = new System.Windows.Forms.ToolStripMenuItem();
+        	this.codeSFD = new System.Windows.Forms.SaveFileDialog();
         	this.statusStrip.SuspendLayout();
         	this.SuspendLayout();
         	// 
-        	// consoleTB
+        	// consoleCSTB
         	// 
-        	this.consoleTB.AcceptsTab = true;
-        	this.consoleTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+        	this.consoleCSTB.AcceptsTab = true;
+        	this.consoleCSTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-        	this.consoleTB.AutoCompleteCustomSource.AddRange(new string[] {
-			"System",
-			"System.Collection.Generic"});
-        	this.consoleTB.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-        	this.consoleTB.BackColor = System.Drawing.Color.Black;
-        	this.consoleTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        	this.consoleTB.ForeColor = System.Drawing.Color.Lime;
-        	this.consoleTB.Location = new System.Drawing.Point(0, 0);
-        	this.consoleTB.MaxLength = 2147483647;
-        	this.consoleTB.Multiline = true;
-        	this.consoleTB.Name = "consoleTB";
-        	this.consoleTB.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-        	this.consoleTB.Size = new System.Drawing.Size(464, 256);
-        	this.consoleTB.TabIndex = 0;
-        	this.consoleTB.Text = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing Syste" +
-	"m.Text;\r\n\r\nnamespace Foo {\r\n\tpublic class Bar {\r\n\t\tstatic void Main(string[] arg" +
-	"s) {\r\n\t\t\t\r\n\t\t}\r\n\t}\r\n}";
-        	this.consoleTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.consoleTB_KeyDown);
-        	this.consoleTB.KeyUp += new System.Windows.Forms.KeyEventHandler(this.consoleTB_KeyUp);
+        	this.consoleCSTB.BackColor = System.Drawing.Color.Black;
+        	this.consoleCSTB.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        	this.consoleCSTB.ForeColor = System.Drawing.Color.Lime;
+        	this.consoleCSTB.Location = new System.Drawing.Point(0, 0);
+        	this.consoleCSTB.Name = "consoleCSTB";
+        	this.consoleCSTB.Size = new System.Drawing.Size(464, 256);
+        	this.consoleCSTB.TabIndex = 0;
+        	this.consoleCSTB.Text = "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.T" +
+	"ext;\n\nnamespace Foo\n{\n\tpublic class Bar\n\t{\n\t\tstatic void Main(string[] args)\n\t\t{" +
+	"\n\t\t\t\n\t\t}\n\t}\n}";
+        	this.consoleCSTB.WordWrap = false;
+        	this.consoleCSTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.consoleCSTB_KeyDown);
         	// 
         	// statusStrip
         	// 
@@ -85,16 +78,17 @@
         	// 
         	// compileTSSB
         	// 
+        	this.compileTSSB.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.settingsTSMI,
+			this.saveTSMI,
+			this.tss,
+			this.spamTSMI});
         	this.compileTSSB.Image = global::CSMD.Properties.Resources.play;
         	this.compileTSSB.ImageTransparentColor = System.Drawing.Color.Magenta;
         	this.compileTSSB.Name = "compileTSSB";
         	this.compileTSSB.Size = new System.Drawing.Size(84, 20);
         	this.compileTSSB.Text = "Compile";
         	this.compileTSSB.ButtonClick += new System.EventHandler(this.compileTSSB_ButtonClick);
-        	// 
-        	// codeSFD
-        	// 
-        	this.codeSFD.Filter = "CST file|*.cst";
         	// 
         	// settingsTSMI
         	// 
@@ -126,13 +120,17 @@
         	this.spamTSMI.Text = "Visit author\'s website";
         	this.spamTSMI.Click += new System.EventHandler(this.spamTSMI_Click);
         	// 
+        	// codeSFD
+        	// 
+        	this.codeSFD.Filter = "CST file|*.cst";
+        	// 
         	// MainF
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(464, 281);
         	this.Controls.Add(this.statusStrip);
-        	this.Controls.Add(this.consoleTB);
+        	this.Controls.Add(this.consoleCSTB);
         	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
         	this.Name = "MainF";
         	this.Text = "CSMD";
@@ -146,7 +144,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox consoleTB;
+        private CSTextBox consoleCSTB;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel infoTSSL;
         private System.Windows.Forms.ToolStripSplitButton compileTSSB;

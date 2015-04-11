@@ -55,6 +55,7 @@
         	this.librariesOFD = new System.Windows.Forms.OpenFileDialog();
         	this.autocompletionCB = new System.Windows.Forms.CheckBox();
         	this.importsOnTheFlyCB = new System.Windows.Forms.CheckBox();
+        	this.wordWrapCB = new System.Windows.Forms.CheckBox();
         	this.librariesCMS.SuspendLayout();
         	this.SuspendLayout();
         	// 
@@ -67,7 +68,7 @@
         	this.librariesLB.Location = new System.Drawing.Point(12, 25);
         	this.librariesLB.Name = "librariesLB";
         	this.librariesLB.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-        	this.librariesLB.Size = new System.Drawing.Size(165, 186);
+        	this.librariesLB.Size = new System.Drawing.Size(165, 225);
         	this.librariesLB.TabIndex = 0;
         	this.librariesLB.SelectedIndexChanged += new System.EventHandler(this.librariesLB_SelectedIndexChanged);
         	this.librariesLB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.librariesLB_KeyDown);
@@ -121,7 +122,7 @@
         	// saveExitB
         	// 
         	this.saveExitB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.saveExitB.Location = new System.Drawing.Point(282, 276);
+        	this.saveExitB.Location = new System.Drawing.Point(282, 326);
         	this.saveExitB.Name = "saveExitB";
         	this.saveExitB.Size = new System.Drawing.Size(90, 23);
         	this.saveExitB.TabIndex = 4;
@@ -162,7 +163,7 @@
         	// applyB
         	// 
         	this.applyB.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-        	this.applyB.Location = new System.Drawing.Point(138, 276);
+        	this.applyB.Location = new System.Drawing.Point(138, 326);
         	this.applyB.Name = "applyB";
         	this.applyB.Size = new System.Drawing.Size(90, 23);
         	this.applyB.TabIndex = 8;
@@ -173,7 +174,7 @@
         	// cancelB
         	// 
         	this.cancelB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-        	this.cancelB.Location = new System.Drawing.Point(12, 276);
+        	this.cancelB.Location = new System.Drawing.Point(12, 326);
         	this.cancelB.Name = "cancelB";
         	this.cancelB.Size = new System.Drawing.Size(62, 23);
         	this.cancelB.TabIndex = 9;
@@ -241,7 +242,7 @@
         	// addB
         	// 
         	this.addB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-        	this.addB.Location = new System.Drawing.Point(105, 228);
+        	this.addB.Location = new System.Drawing.Point(105, 278);
         	this.addB.Name = "addB";
         	this.addB.Size = new System.Drawing.Size(72, 23);
         	this.addB.TabIndex = 15;
@@ -252,7 +253,7 @@
         	// deleteB
         	// 
         	this.deleteB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-        	this.deleteB.Location = new System.Drawing.Point(12, 228);
+        	this.deleteB.Location = new System.Drawing.Point(12, 278);
         	this.deleteB.Name = "deleteB";
         	this.deleteB.Size = new System.Drawing.Size(49, 23);
         	this.deleteB.TabIndex = 16;
@@ -297,11 +298,22 @@
         	this.importsOnTheFlyCB.Text = "Import usings on the fly?";
         	this.importsOnTheFlyCB.UseVisualStyleBackColor = true;
         	// 
+        	// wordWrapCB
+        	// 
+        	this.wordWrapCB.AutoSize = true;
+        	this.wordWrapCB.Location = new System.Drawing.Point(183, 278);
+        	this.wordWrapCB.Name = "wordWrapCB";
+        	this.wordWrapCB.Size = new System.Drawing.Size(117, 17);
+        	this.wordWrapCB.TabIndex = 19;
+        	this.wordWrapCB.Text = "Enable word wrap?";
+        	this.wordWrapCB.UseVisualStyleBackColor = true;
+        	// 
         	// SettingsF
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(384, 311);
+        	this.ClientSize = new System.Drawing.Size(384, 361);
+        	this.Controls.Add(this.wordWrapCB);
         	this.Controls.Add(this.importsOnTheFlyCB);
         	this.Controls.Add(this.autocompletionCB);
         	this.Controls.Add(this.deleteB);
@@ -320,7 +332,7 @@
         	this.Controls.Add(this.label1);
         	this.Controls.Add(this.librariesLB);
         	this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-        	this.MinimumSize = new System.Drawing.Size(400, 350);
+        	this.MinimumSize = new System.Drawing.Size(400, 400);
         	this.Name = "SettingsF";
         	this.Text = "Settings";
         	this.librariesCMS.ResumeLayout(false);
@@ -356,5 +368,6 @@
         private System.Windows.Forms.OpenFileDialog librariesOFD;
         private System.Windows.Forms.CheckBox autocompletionCB;
         private System.Windows.Forms.CheckBox importsOnTheFlyCB;
+        private System.Windows.Forms.CheckBox wordWrapCB;
     }
 }

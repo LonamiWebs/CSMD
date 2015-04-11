@@ -1,13 +1,29 @@
-﻿/** Made by Lonami Exo
- * 31 - January - 2015
- * (C) LonamiWebs - */
- 
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
- 
-public static class ScrollUtils {
-		
+
+public static class Utils
+{
+    public static bool ValidFilePath(string path)
+    {
+    	List<char> invalidChars = Path.GetInvalidFileNameChars().ToList();
+    	if (path.Contains("\\") && path.Count(c => c == ':') == 1) {
+    		invalidChars.Remove('\\');
+    		invalidChars.Remove(':');
+    		return path.Trim('\\') == path && path.IndexOfAny(invalidChars.ToArray()) < 0;
+    	}
+    	return !String.IsNullOrWhiteSpace(path) && path.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+    }
+}
+
+/** Made by Lonami Exo
+ * 31 - January - 2015
+ * (C) LonamiWebs - */
+public static class ScrollUtils
+{
 	#region Consts and externs
 
 	const int EM_LINESCROLL = 0x00B6;
@@ -81,5 +97,4 @@ public static class ScrollUtils {
 	}
 	
 	#endregion
-	
 }
