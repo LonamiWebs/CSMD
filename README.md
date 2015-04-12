@@ -14,12 +14,13 @@ You can even write your own CSMD scripts (*.cst files*) and open these as if it 
 Current features
 ----------------
 
-The current features available in the 1.0.2.8 version for CSMD are:
+The current features available in the 1.4.0.0 version for CSMD are:
  * Compile C# code from the CSMD console
  * Save code snippets anywhere and execute these in any computer with CSMD
  * Change the .Net framework target version
  * Decide whether create a temporal executable file or not
  * Add references to external libraries
+ * C# autocompletion. It will always suggest all declared variables and methods, and it shows the current method information (if it's not declared by you)
  
 Contact
 -------
